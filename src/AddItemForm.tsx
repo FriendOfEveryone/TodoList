@@ -1,59 +1,51 @@
-import React, {ChangeEvent, FC, KeyboardEvent, memo, useState} from 'react';
-import Button from '@mui/material/Button';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import { AddBox } from '@mui/icons-material';
 
 type AddItemFormPropsType = {
-   callback: (newTitle: string) => void
+    addItem: (title: string) => void
 }
 
-export const AddItemForm: FC<AddItemFormPropsType> = React.memo((props) => {
-   console.log('AddItemForm')
+export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
+    console.log('AddItemForm called')
 
-   const [title, setTitle] = useState("")
-   const [error, setError] = useState<string | null>(null)
+    let [title, setTitle] = useState('')
+    let [error, setError] = useState<string | null>(null)
 
-   const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      setTitle(e.currentTarget.value)
-   }
+    const addItem = () => {
+        if (title.trim() !== '') {
+            props.addItem(title);
+            setTitle('');
+        } else {
+            setError('Title is required');
+        }
+    }
 
-   const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (error) {
-         setError(null);
-      }
-      if (e.charCode === 13) {
-         addItem();
-      }
-   }
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
 
-   const addItem = () => {
-      const newTitle = title.trim();
-      if (newTitle !== "") {
-         props.callback(newTitle);
-         setTitle("")
-      } else {
-         setError("Title is required");
-      }
-   }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
+            setError(null);
+        }
+        if (e.charCode === 13) {
+            addItem();
+        }
+    }
 
-   const styles = {
-      maxWidth: '40px',
-      maxHeight: '40px',
-      minWidth: '40pxx',
-      minHeight: '40px',
-   }
-
-   return (
-      <div>
-         <TextField id="outlined-basic"
-                    label={error ? error : 'type smth...'}
-                    variant="outlined"
-                    size={'small'}
-                    error={!!error}
-                    value={title}
-                    onChange={onChangeInputHandler}
-                    onKeyPress={onKeyPressHandler}
-         />
-         <Button variant={'contained'} onClick={addItem} size={'small'} style={styles}>+</Button>
-      </div>
-   );
+    return <div>
+        <TextField variant="outlined"
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   label="Title"
+                   helperText={error}
+        />
+        <IconButton color="primary" onClick={addItem}>
+            <AddBox/>
+        </IconButton>
+    </div>
 })
