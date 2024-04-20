@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/friendofeveryone.github.io/my-app/static/css/main.e6c13ad2.css",
+    "main.js": "/friendofeveryone.github.io/my-app/static/js/main.93689d40.js",
+    "index.html": "/friendofeveryone.github.io/my-app/index.html",
+    "main.e6c13ad2.css.map": "/friendofeveryone.github.io/my-app/static/css/main.e6c13ad2.css.map",
+    "main.93689d40.js.map": "/friendofeveryone.github.io/my-app/static/js/main.93689d40.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.93689d40.js"
+  ]
+}
